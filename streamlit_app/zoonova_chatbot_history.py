@@ -797,20 +797,13 @@ def search_df(user_input):
 # search in duckduckgo
 
 
-async def search_ddg(user_input):
+def search_ddg(user_input):
     max_links = 8
     results = []
-    async with DDGS() as ddgs:
+    with DDGS() as ddgs:
         ddgs_gen = ddgs.text(user_input, max_results=max_links)
-        try:
-            for r in islice(ddgs_gen, max_links):
-                results.append(r)
-                await asyncio.sleep(5)  # Adding sleep to avoid hitting rate limits
-        except Exception as e:
-            if 'Ratelimit' in str(e):
-                print("Rate limit hit, waiting for a while before retrying...")
-                await asyncio.sleep(10)  # Wait for 1 minute before retrying
-                return await search_ddg(user_input)  # Retry the search
+        for r in islice(ddgs_gen, max_links):
+            results.append(r)
         titles = []
         bodies = []
         links = []
@@ -890,7 +883,7 @@ def string_to_dataframe(s):
 
 
 # Function to generate the response
-async def generate_response(user_input):
+def generate_response(user_input):
     st.session_state["messages"].append({"role": "user", "content": user_input})
     start = time.time()
     try:
@@ -904,7 +897,7 @@ async def generate_response(user_input):
     # df_eval = AIMessage(content=str(df_results))
     # memory1.chat_memory.messages.append(df_eval)
     start = time.time()
-    ddg_results = await search_ddg(user_input)
+    ddg_results = search_ddg(user_input)
     print("ddg: ", time.time() - start)
     start = time.time()
 
