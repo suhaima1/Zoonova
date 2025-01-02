@@ -1,5 +1,5 @@
 from openai import OpenAI
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 import os
 import base64
 import re
@@ -9,7 +9,7 @@ from PIL import Image
 import io
 import openai
 # Load environment variables from .env file
-load_dotenv()
+# load_dotenv()
 
 # Access the API key
 # api_key = os.getenv("OPENAI_API_KEY")
