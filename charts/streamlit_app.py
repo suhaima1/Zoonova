@@ -101,6 +101,8 @@ def generate_charts(input):
 
 def main():
     st.title("Zoonova Charts")
+    import matplotlib
+    st.write(f"Matplotlib is installed: {matplotlib.__version__}")
     # uploaded_file = st.file_uploader("Upload an Image", type=["png", "jpg", "jpeg"])
     input = st.text_input("Enter:", "")
 
