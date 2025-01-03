@@ -51,7 +51,7 @@ def generate_charts(input):
         max_tokens=4000,
     )
     response_message = response.choices[0].message.content
-
+    
     # Use regex to find code blocks
     code_blocks = re.findall(r"```python(.*?)```", response_message, re.DOTALL)
     # response = openai.ChatCompletion.create(
@@ -80,6 +80,7 @@ def generate_charts(input):
         file_name = f"extracted_code_{i + 1}.py"
         with open(file_name, "w") as code_file:
             code_file.write(code.strip())
+            st.write('Code written to file')
         print(f"Code saved to {file_name}")
 
     # Run the generated Python file
@@ -89,10 +90,13 @@ def generate_charts(input):
             ["python", file_name], capture_output=True, text=True
         )
         print(f"Output from {file_name}:\n{result.stdout}")
+        st.write(f"Output from {file_name}:\n{result.stdout}")
         if result.stderr:
             print(f"Error from {file_name}:\n{result.stderr}")
+            st.write(f"Error from {file_name}:\n{result.stderr}")
     except Exception as e:
         print(f"An error occurred while running {file_name}: {e}")
+        st.write(f"An error occurred while running {file_name}: {e}")
 
 
 def main():
@@ -115,10 +119,10 @@ def main():
         if input is not None:
             generate_charts(input)
             image_files = [f for f in os.listdir('./') if f.endswith(('.png', '.jpg', '.jpeg'))]
-
+            
             if image_files:
                 print(f"Found {len(image_files)} image(s) in the directory.")
-                
+                st.write(f"Found {len(image_files)} image(s) in the directory.")
                 # Display all images
                 for img_file in image_files:
                     image_path = os.path.join('./', img_file)
