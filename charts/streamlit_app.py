@@ -14,7 +14,8 @@ import openai
 # Access the API key
 # api_key = os.getenv("OPENAI_API_KEY")
 openai_api_key = st.secrets["OPENAI_API_KEY"]
-client = OpenAI(api_key=openai_api_key)
+openai.api_key = openai_api_key
+client = OpenAI()
 
 # Function to encode the image
 # def encode_image(image_path):
