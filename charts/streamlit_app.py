@@ -48,7 +48,7 @@ def generate_charts(input):
                 The text data is: {processed_text}""",
             }
         ],
-        max_tokens=2000,
+        max_tokens=4000,
     )
     response_message = response.choices[0].message.content
 
