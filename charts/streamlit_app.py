@@ -93,7 +93,7 @@ def generated_chart_function():
             # Find generated image files
             image_files = [f for f in os.listdir('./') if f.endswith(('.png', '.jpg', '.jpeg'))]
             if image_files:
-                st.write(f"Found {len(image_files)} image(s) in the directory.")
+                # st.write(f"Found {len(image_files)} image(s) in the directory.")
                 # Display all images
                 for img_file in image_files:
                     image_path = os.path.join('./', img_file)
@@ -128,8 +128,6 @@ def generated_chart_function():
 
 def main():
     st.title("Zoonova Charts")
-    import matplotlib
-    st.write(f"Matplotlib is installed: {matplotlib.__version__}")
     # uploaded_file = st.file_uploader("Upload an Image", type=["png", "jpg", "jpeg"])
     input = st.text_input("Enter:", "")
 
@@ -147,19 +145,6 @@ def main():
 
         if input is not None:
             generate_charts(input)
-            image_files = [f for f in os.listdir('./') if f.endswith(('.png', '.jpg', '.jpeg'))]
-            
-            if image_files:
-                print(f"Found {len(image_files)} image(s) in the directory.")
-                st.write(f"Found {len(image_files)} image(s) in the directory.")
-                # Display all images
-                for img_file in image_files:
-                    image_path = os.path.join('./', img_file)
-                    image = Image.open(image_path)
-                    st.image(image, caption=img_file, use_column_width=True)
-                    os.remove(image_path)
-            else:
-                st.write("No charts generated.")
         else:
             st.write('No data entered.')
 
