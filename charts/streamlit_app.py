@@ -8,6 +8,7 @@ import streamlit as st
 from PIL import Image
 import io
 import openai
+import matplotlib.pyplot as plt
 # Load environment variables from .env file
 # load_dotenv()
 
@@ -78,9 +79,9 @@ def generate_charts(input):
     # Save the extracted code to a file or process it
     for i, code in enumerate(code_blocks):
         function_code = f"""
-        def generated_chart_function():
-        {code.strip().replace('\n', '\n    ')}
-        """
+def generated_chart_function():
+{code.strip().replace('\n', '\n    ')}
+"""
         try:
             # Execute the function code
             exec(function_code, globals())
