@@ -77,26 +77,52 @@ def generate_charts(input):
 
     # Save the extracted code to a file or process it
     for i, code in enumerate(code_blocks):
-        file_name = f"extracted_code_{i + 1}.py"
-        with open(file_name, "w") as code_file:
-            code_file.write(code.strip())
-            st.write('Code written to file')
-        print(f"Code saved to {file_name}")
+        function_code = f"""
+        def generated_chart_function():
+        {code.strip().replace('\n', '\n    ')}
+        """
+        try:
+            # Execute the function code
+            exec(function_code, globals())
+            # Call the generated function
+            generated_chart_function()
+
+            st.write("Code executed successfully.")
+
+            # Find generated image files
+            image_files = [f for f in os.listdir('./') if f.endswith(('.png', '.jpg', '.jpeg'))]
+            if image_files:
+                st.write(f"Found {len(image_files)} image(s) in the directory.")
+                # Display all images
+                for img_file in image_files:
+                    image_path = os.path.join('./', img_file)
+                    image = Image.open(image_path)
+                    st.image(image, caption=img_file, use_column_width=True)
+                    os.remove(image_path)  # Clean up after displaying
+            else:
+                st.write("No charts generated.")
+        except Exception as e:
+            st.write(f"An error occurred: {e}")
+        # file_name = f"extracted_code_{i + 1}.py"
+        # with open(file_name, "w") as code_file:
+        #     code_file.write(code.strip())
+        #     st.write('Code written to file')
+        # print(f"Code saved to {file_name}")
 
     # Run the generated Python file
-    try:
-        print(f"Running {file_name}...")
-        result = subprocess.run(
-            ["python", file_name], capture_output=True, text=True
-        )
-        print(f"Output from {file_name}:\n{result.stdout}")
-        st.write(f"Output from {file_name}:\n{result.stdout}")
-        if result.stderr:
-            print(f"Error from {file_name}:\n{result.stderr}")
-            st.write(f"Error from {file_name}:\n{result.stderr}")
-    except Exception as e:
-        print(f"An error occurred while running {file_name}: {e}")
-        st.write(f"An error occurred while running {file_name}: {e}")
+    # try:
+    #     print(f"Running {file_name}...")
+    #     result = subprocess.run(
+    #         ["python", file_name], capture_output=True, text=True
+    #     )
+    #     print(f"Output from {file_name}:\n{result.stdout}")
+    #     st.write(f"Output from {file_name}:\n{result.stdout}")
+    #     if result.stderr:
+    #         print(f"Error from {file_name}:\n{result.stderr}")
+    #         st.write(f"Error from {file_name}:\n{result.stderr}")
+    # except Exception as e:
+    #     print(f"An error occurred while running {file_name}: {e}")
+    #     st.write(f"An error occurred while running {file_name}: {e}")
 
 
 def main():
