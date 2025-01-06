@@ -88,7 +88,7 @@ def generated_chart_function():
             # Call the generated function
             generated_chart_function()
 
-            st.write("Code executed successfully.")
+            # st.write("Code executed successfully.")
 
             # Find generated image files
             image_files = [f for f in os.listdir('./') if f.endswith(('.png', '.jpg', '.jpeg'))]
