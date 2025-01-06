@@ -80,7 +80,7 @@ def generate_charts(input):
     for i, code in enumerate(code_blocks):
         function_code = f"""
 def generated_chart_function():
-{code.strip().replace('\n', '\n    ')}
+    {code.strip().replace('\n', '\n    ')}
 """
         try:
             # Execute the function code
